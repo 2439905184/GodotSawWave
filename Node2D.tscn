@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=2]
+
+[sub_resource type="AudioStreamGenerator" id=1]
+
+[node name="Node2D" type="Node2D"]
+pause_mode = 1
+
+[node name="Player" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+margin_right = 31.0
+margin_bottom = 40.0
+text = "sin"
+
+[node name="Button2" type="Button" parent="HBoxContainer"]
+margin_left = 35.0
+margin_right = 90.0
+margin_bottom = 40.0
+text = "square"
+
+[node name="Button3" type="Button" parent="HBoxContainer"]
+margin_left = 94.0
+margin_right = 130.0
+margin_bottom = 40.0
+text = "saw"
