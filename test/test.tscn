@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://test/testy.gd" type="Script" id=1]
+[ext_resource path="res://waves/square.gd" type="Script" id=2]
+
+[sub_resource type="AudioStreamGenerator" id=1]
 
 [node name="Node2D" type="Node2D"]
 
@@ -44,6 +47,11 @@ rect_min_size = Vector2( 64, 64 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.25
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 1 )
+autoplay = true
+script = ExtResource( 2 )
 
 [connection signal="pressed" from="Button" to="HBoxContainer" method="_on_Button_pressed"]
 [connection signal="timeout" from="Timer" to="HBoxContainer" method="_on_Timer_timeout"]

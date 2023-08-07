@@ -11,7 +11,7 @@ func _ready():
 	self.stream.mix_rate = sample_rate
 	playback = get_stream_playback()
 	_fill_buffer()
-#	self.play()
+	self.play()
 
 func _process(delta):
 	_fill_buffer()

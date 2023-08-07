@@ -29,7 +29,9 @@ func _fill_buffer():
 	while to_fill > 0:
 		var frame_value = cal_square(phase)
 		playback.push_frame(Vector2.ONE * frame_value) # Audio frames are stereo.
-		phase = fmod(phase + increment, 1.0) - 0.5
+		phase += increment
+		if phase >= 1.0:
+			phase -= 2.0
 		to_fill -= 1
 
 	pass
