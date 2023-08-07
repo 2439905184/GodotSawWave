@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://sequencer.gd" type="Script" id=1]
-[ext_resource path="res://waves/square.gd" type="Script" id=2]
+[ext_resource path="res://waves/saw.gd" type="Script" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://synth_wave_group.tres" type="ButtonGroup" id=4]
 
 [sub_resource type="AudioStreamGenerator" id=1]
 
 [node name="Node2D" type="Node2D"]
 pause_mode = 1
+script = ExtResource( 3 )
 
 [node name="Player" type="AudioStreamPlayer" parent="."]
 stream = SubResource( 1 )
@@ -19,21 +22,26 @@ margin_top = 1.0
 margin_right = 96.0
 margin_bottom = 41.0
 
-[node name="Button" type="Button" parent="sound_waves"]
-visible = false
-margin_right = 31.0
-margin_bottom = 40.0
-text = "sin"
+[node name="Label" type="Label" parent="sound_waves"]
+margin_top = 13.0
+margin_right = 71.0
+margin_bottom = 27.0
+text = "synth wave"
 
-[node name="Button2" type="Button" parent="sound_waves"]
-margin_right = 55.0
+[node name="square" type="Button" parent="sound_waves"]
+margin_left = 75.0
+margin_right = 130.0
 margin_bottom = 40.0
+toggle_mode = true
+group = ExtResource( 4 )
 text = "square"
 
-[node name="Button3" type="Button" parent="sound_waves"]
-margin_left = 59.0
-margin_right = 95.0
+[node name="saw" type="Button" parent="sound_waves"]
+margin_left = 134.0
+margin_right = 170.0
 margin_bottom = 40.0
+toggle_mode = true
+group = ExtResource( 4 )
 text = "saw"
 
 [node name="play" type="Button" parent="."]
@@ -654,6 +662,8 @@ margin_right = 247.0
 margin_bottom = 170.0
 text = "step"
 
+[connection signal="pressed" from="sound_waves/square" to="." method="_on_square_pressed"]
+[connection signal="pressed" from="sound_waves/saw" to="." method="_on_saw_pressed"]
 [connection signal="pressed" from="play" to="Player" method="_on_play_pressed"]
 [connection signal="pressed" from="play" to="sequencer" method="_on_play_pressed"]
 [connection signal="pressed" from="stop" to="Player" method="_on_stop_pressed"]

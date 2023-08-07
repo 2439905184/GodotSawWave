@@ -17,7 +17,7 @@ func _process(delta):
 	_fill_buffer()
 
 func cal_sawtooth(p_value):
-	return amplitude * (p_value - floor(p_value))
+	return amplitude * (2.0 * (p_value - floor(p_value)) - 1.0)
 
 func _fill_buffer():
 	var increment = frequency / sample_rate
@@ -26,7 +26,9 @@ func _fill_buffer():
 	while to_fill > 0:
 		var frame_value = cal_sawtooth(phase)
 		playback.push_frame(Vector2.ONE * frame_value) # Audio frames are stereo.
-		phase = fmod(phase + increment, 1.0)
+		phase += increment
+		if phase >= 1.0:
+			phase -= 1.0
 		to_fill -= 1
 
 	pass
