@@ -1,15 +1,40 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://sequencer.gd" type="Script" id=1]
-[ext_resource path="res://waves/saw.gd" type="Script" id=2]
+[ext_resource path="res://waves/square.gd" type="Script" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
 [ext_resource path="res://synth_wave_group.tres" type="ButtonGroup" id=4]
+[ext_resource path="res://keyboard.png" type="Texture" id=5]
+[ext_resource path="res://Alibaba-PuHuiTi-Regular.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://button_pressed_drum.tres" type="StyleBox" id=7]
+[ext_resource path="res://sounds/美科打击乐-kick.wav" type="AudioStream" id=8]
+[ext_resource path="res://sounds/美科打击乐-hihat.wav" type="AudioStream" id=9]
+[ext_resource path="res://sounds/美科打击乐-clap.wav" type="AudioStream" id=10]
+[ext_resource path="res://sounds/美科打击乐-snare.wav" type="AudioStream" id=11]
+[ext_resource path="res://script/kick_line.gd" type="Script" id=12]
+[ext_resource path="res://script/clap_line.gd" type="Script" id=13]
+[ext_resource path="res://script/hihat_line.gd" type="Script" id=14]
+[ext_resource path="res://script/snare_line.gd" type="Script" id=15]
 
 [sub_resource type="AudioStreamGenerator" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.737255, 0.913725, 0.113725, 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 6 )
 
 [node name="Node2D" type="Node2D"]
 pause_mode = 1
 script = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 716.0
+color = Color( 0.396078, 0.623529, 0.4, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Player" type="AudioStreamPlayer" parent="."]
 stream = SubResource( 1 )
@@ -29,6 +54,7 @@ margin_bottom = 27.0
 text = "synth wave"
 
 [node name="square" type="Button" parent="sound_waves"]
+visible = false
 margin_left = 75.0
 margin_right = 130.0
 margin_bottom = 40.0
@@ -37,6 +63,7 @@ group = ExtResource( 4 )
 text = "square"
 
 [node name="saw" type="Button" parent="sound_waves"]
+visible = false
 margin_left = 134.0
 margin_right = 170.0
 margin_bottom = 40.0
@@ -60,11 +87,18 @@ text = "stop"
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+[node name="Label11" type="Label" parent="."]
 margin_left = 5.0
-margin_top = 268.0
-margin_right = 69.0
-margin_bottom = 332.0
+margin_top = 129.0
+margin_right = 76.0
+margin_bottom = 143.0
+text = "squared 303"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 319.0
+margin_right = 71.0
+margin_bottom = 383.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 2.0
@@ -79,21 +113,24 @@ margin_bottom = 14.0
 text = "pitch"
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
+visible = false
 margin_top = 26.0
 margin_right = 42.0
 margin_bottom = 40.0
 text = "gate"
 
 [node name="Label3" type="Label" parent="VBoxContainer"]
-margin_top = 52.0
+visible = false
+margin_top = 26.0
 margin_right = 42.0
-margin_bottom = 66.0
+margin_bottom = 40.0
 text = "slide"
 
 [node name="Label4" type="Label" parent="VBoxContainer"]
-margin_top = 78.0
+visible = false
+margin_top = 26.0
 margin_right = 42.0
-margin_bottom = 92.0
+margin_bottom = 40.0
 text = "accent"
 
 [node name="sequencer" type="HBoxContainer" parent="."]
@@ -113,27 +150,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note1"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note1"]
+visible = false
+margin_top = 28.0
+margin_right = 74.0
+margin_bottom = 48.0
+toggle_mode = true
+
+[node name="gate3" type="Button" parent="sequencer/note1"]
+visible = false
 margin_top = 52.0
 margin_right = 74.0
 margin_bottom = 72.0
 toggle_mode = true
 
-[node name="gate3" type="Button" parent="sequencer/note1"]
-margin_top = 76.0
-margin_right = 74.0
-margin_bottom = 96.0
-toggle_mode = true
-
 [node name="ColorRect" type="ColorRect" parent="sequencer/note1"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note2" type="VBoxContainer" parent="sequencer"]
@@ -147,27 +187,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note2"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note2"]
+visible = false
 margin_top = 52.0
 margin_right = 74.0
 margin_bottom = 72.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note2"]
+visible = false
 margin_top = 76.0
 margin_right = 74.0
 margin_bottom = 96.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note2"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note3" type="VBoxContainer" parent="sequencer"]
@@ -181,27 +224,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note3"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note3"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note3"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note3"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note4" type="VBoxContainer" parent="sequencer"]
@@ -215,27 +261,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note4"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note4"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note4"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note4"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note5" type="VBoxContainer" parent="sequencer"]
@@ -249,27 +298,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note5"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note5"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note5"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note5"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note6" type="VBoxContainer" parent="sequencer"]
@@ -283,27 +335,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note6"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note6"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note6"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note6"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note7" type="VBoxContainer" parent="sequencer"]
@@ -317,27 +372,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note7"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note7"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note7"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note7"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note8" type="VBoxContainer" parent="sequencer"]
@@ -351,27 +409,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note8"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note8"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note8"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note8"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note9" type="VBoxContainer" parent="sequencer"]
@@ -385,27 +446,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note9"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note9"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note9"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note9"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note10" type="VBoxContainer" parent="sequencer"]
@@ -419,27 +483,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note10"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note10"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note10"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note10"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note11" type="VBoxContainer" parent="sequencer"]
@@ -453,27 +520,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note11"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note11"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note11"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note11"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note12" type="VBoxContainer" parent="sequencer"]
@@ -487,27 +557,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note12"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note12"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note12"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note12"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note13" type="VBoxContainer" parent="sequencer"]
@@ -521,27 +594,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note13"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note13"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note13"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note13"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note14" type="VBoxContainer" parent="sequencer"]
@@ -555,27 +631,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note14"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note14"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note14"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note14"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note15" type="VBoxContainer" parent="sequencer"]
@@ -589,27 +668,30 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note15"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note15"]
-margin_top = 52.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 72.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate3" type="Button" parent="sequencer/note15"]
-margin_top = 76.0
+visible = false
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 96.0
+margin_bottom = 48.0
 toggle_mode = true
 
 [node name="ColorRect" type="ColorRect" parent="sequencer/note15"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="note16" type="VBoxContainer" parent="sequencer"]
@@ -623,50 +705,654 @@ margin_bottom = 24.0
 max_value = 7.0
 
 [node name="gate" type="Button" parent="sequencer/note16"]
+visible = false
 margin_top = 28.0
 margin_right = 74.0
 margin_bottom = 48.0
 toggle_mode = true
 
 [node name="gate2" type="Button" parent="sequencer/note16"]
+visible = false
+margin_top = 28.0
+margin_right = 74.0
+margin_bottom = 48.0
+toggle_mode = true
+
+[node name="gate3" type="Button" parent="sequencer/note16"]
+visible = false
 margin_top = 52.0
 margin_right = 74.0
 margin_bottom = 72.0
 toggle_mode = true
 
-[node name="gate3" type="Button" parent="sequencer/note16"]
-margin_top = 76.0
-margin_right = 74.0
-margin_bottom = 96.0
-toggle_mode = true
-
 [node name="ColorRect" type="ColorRect" parent="sequencer/note16"]
-margin_top = 100.0
+margin_top = 28.0
 margin_right = 74.0
-margin_bottom = 132.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 32, 32 )
 
 [node name="bpm" type="SpinBox" parent="."]
-margin_left = 94.0
+margin_left = 172.0
 margin_top = 150.0
-margin_right = 193.0
+margin_right = 271.0
 margin_bottom = 174.0
 max_value = 522.0
 value = 60.0
 prefix = "bpm"
 
 [node name="step" type="Button" parent="."]
-margin_left = 207.0
+margin_left = 94.0
 margin_top = 150.0
-margin_right = 247.0
+margin_right = 164.0
 margin_bottom = 170.0
-text = "step"
+text = "step-test"
+
+[node name="keyboard" type="Button" parent="."]
+margin_left = 177.0
+margin_top = 1.0
+margin_right = 217.0
+margin_bottom = 41.0
+hint_tooltip = "use computer keyboard as midi keyboard"
+custom_styles/pressed = SubResource( 2 )
+toggle_mode = true
+icon = ExtResource( 5 )
+expand_icon = true
+
+[node name="HSlider" type="HSlider" parent="."]
+visible = false
+margin_left = 406.0
+margin_top = 28.0
+margin_right = 541.0
+margin_bottom = 44.0
+
+[node name="HSlider2" type="HSlider" parent="."]
+visible = false
+margin_left = 552.0
+margin_top = 28.0
+margin_right = 687.0
+margin_bottom = 44.0
+
+[node name="HSlider3" type="HSlider" parent="."]
+visible = false
+margin_left = 259.0
+margin_top = 28.0
+margin_right = 394.0
+margin_bottom = 44.0
+
+[node name="HSlider4" type="HSlider" parent="."]
+visible = false
+margin_left = 698.0
+margin_top = 28.0
+margin_right = 833.0
+margin_bottom = 44.0
+
+[node name="Label4" type="Label" parent="."]
+visible = false
+margin_left = 541.0
+margin_top = 23.0
+margin_right = 552.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 3 )
+text = "S"
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_left = 228.0
+margin_right = 292.0
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 3 )
+text = "音量包络"
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+margin_left = 250.0
+margin_top = 23.0
+margin_right = 261.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 3 )
+text = "A"
+
+[node name="Label3" type="Label" parent="."]
+visible = false
+margin_left = 394.0
+margin_top = 28.0
+margin_right = 405.0
+margin_bottom = 51.0
+custom_fonts/font = SubResource( 3 )
+text = "D"
+
+[node name="Label5" type="Label" parent="."]
+visible = false
+margin_left = 687.0
+margin_top = 23.0
+margin_right = 698.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 3 )
+text = "R"
+
+[node name="kick_line" type="HBoxContainer" parent="."]
+margin_left = 38.0
+margin_top = 319.0
+margin_right = 290.0
+margin_bottom = 339.0
+script = ExtResource( 12 )
+
+[node name="Button" type="Button" parent="kick_line"]
+margin_right = 12.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button2" type="Button" parent="kick_line"]
+margin_left = 16.0
+margin_right = 28.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button3" type="Button" parent="kick_line"]
+margin_left = 32.0
+margin_right = 44.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button4" type="Button" parent="kick_line"]
+margin_left = 48.0
+margin_right = 60.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button5" type="Button" parent="kick_line"]
+margin_left = 64.0
+margin_right = 76.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button6" type="Button" parent="kick_line"]
+margin_left = 80.0
+margin_right = 92.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button7" type="Button" parent="kick_line"]
+margin_left = 96.0
+margin_right = 108.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button8" type="Button" parent="kick_line"]
+margin_left = 112.0
+margin_right = 124.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button9" type="Button" parent="kick_line"]
+margin_left = 128.0
+margin_right = 140.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button10" type="Button" parent="kick_line"]
+margin_left = 144.0
+margin_right = 156.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button11" type="Button" parent="kick_line"]
+margin_left = 160.0
+margin_right = 172.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button12" type="Button" parent="kick_line"]
+margin_left = 176.0
+margin_right = 188.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button13" type="Button" parent="kick_line"]
+margin_left = 192.0
+margin_right = 204.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button14" type="Button" parent="kick_line"]
+margin_left = 208.0
+margin_right = 220.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button15" type="Button" parent="kick_line"]
+margin_left = 224.0
+margin_right = 236.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button16" type="Button" parent="kick_line"]
+margin_left = 240.0
+margin_right = 252.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="clap_line" type="HBoxContainer" parent="."]
+margin_left = 38.0
+margin_top = 341.0
+margin_right = 290.0
+margin_bottom = 361.0
+script = ExtResource( 13 )
+
+[node name="Button" type="Button" parent="clap_line"]
+margin_right = 12.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button2" type="Button" parent="clap_line"]
+margin_left = 16.0
+margin_right = 28.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button3" type="Button" parent="clap_line"]
+margin_left = 32.0
+margin_right = 44.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button4" type="Button" parent="clap_line"]
+margin_left = 48.0
+margin_right = 60.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button5" type="Button" parent="clap_line"]
+margin_left = 64.0
+margin_right = 76.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button6" type="Button" parent="clap_line"]
+margin_left = 80.0
+margin_right = 92.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button7" type="Button" parent="clap_line"]
+margin_left = 96.0
+margin_right = 108.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button8" type="Button" parent="clap_line"]
+margin_left = 112.0
+margin_right = 124.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button9" type="Button" parent="clap_line"]
+margin_left = 128.0
+margin_right = 140.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button10" type="Button" parent="clap_line"]
+margin_left = 144.0
+margin_right = 156.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button11" type="Button" parent="clap_line"]
+margin_left = 160.0
+margin_right = 172.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button12" type="Button" parent="clap_line"]
+margin_left = 176.0
+margin_right = 188.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button13" type="Button" parent="clap_line"]
+margin_left = 192.0
+margin_right = 204.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button14" type="Button" parent="clap_line"]
+margin_left = 208.0
+margin_right = 220.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button15" type="Button" parent="clap_line"]
+margin_left = 224.0
+margin_right = 236.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button16" type="Button" parent="clap_line"]
+margin_left = 240.0
+margin_right = 252.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="hihat_line" type="HBoxContainer" parent="."]
+margin_left = 38.0
+margin_top = 365.0
+margin_right = 290.0
+margin_bottom = 385.0
+script = ExtResource( 14 )
+
+[node name="Button" type="Button" parent="hihat_line"]
+margin_right = 12.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button2" type="Button" parent="hihat_line"]
+margin_left = 16.0
+margin_right = 28.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button3" type="Button" parent="hihat_line"]
+margin_left = 32.0
+margin_right = 44.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button4" type="Button" parent="hihat_line"]
+margin_left = 48.0
+margin_right = 60.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button5" type="Button" parent="hihat_line"]
+margin_left = 64.0
+margin_right = 76.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button6" type="Button" parent="hihat_line"]
+margin_left = 80.0
+margin_right = 92.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button7" type="Button" parent="hihat_line"]
+margin_left = 96.0
+margin_right = 108.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button8" type="Button" parent="hihat_line"]
+margin_left = 112.0
+margin_right = 124.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button9" type="Button" parent="hihat_line"]
+margin_left = 128.0
+margin_right = 140.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button10" type="Button" parent="hihat_line"]
+margin_left = 144.0
+margin_right = 156.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button11" type="Button" parent="hihat_line"]
+margin_left = 160.0
+margin_right = 172.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button12" type="Button" parent="hihat_line"]
+margin_left = 176.0
+margin_right = 188.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button13" type="Button" parent="hihat_line"]
+margin_left = 192.0
+margin_right = 204.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button14" type="Button" parent="hihat_line"]
+margin_left = 208.0
+margin_right = 220.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button15" type="Button" parent="hihat_line"]
+margin_left = 224.0
+margin_right = 236.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button16" type="Button" parent="hihat_line"]
+margin_left = 240.0
+margin_right = 252.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="snare_line" type="HBoxContainer" parent="."]
+margin_left = 39.0
+margin_top = 390.0
+margin_right = 291.0
+margin_bottom = 410.0
+script = ExtResource( 15 )
+
+[node name="Button" type="Button" parent="snare_line"]
+margin_right = 12.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button2" type="Button" parent="snare_line"]
+margin_left = 16.0
+margin_right = 28.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button3" type="Button" parent="snare_line"]
+margin_left = 32.0
+margin_right = 44.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button4" type="Button" parent="snare_line"]
+margin_left = 48.0
+margin_right = 60.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button5" type="Button" parent="snare_line"]
+margin_left = 64.0
+margin_right = 76.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button6" type="Button" parent="snare_line"]
+margin_left = 80.0
+margin_right = 92.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button7" type="Button" parent="snare_line"]
+margin_left = 96.0
+margin_right = 108.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button8" type="Button" parent="snare_line"]
+margin_left = 112.0
+margin_right = 124.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button9" type="Button" parent="snare_line"]
+margin_left = 128.0
+margin_right = 140.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button10" type="Button" parent="snare_line"]
+margin_left = 144.0
+margin_right = 156.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button11" type="Button" parent="snare_line"]
+margin_left = 160.0
+margin_right = 172.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button12" type="Button" parent="snare_line"]
+margin_left = 176.0
+margin_right = 188.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button13" type="Button" parent="snare_line"]
+margin_left = 192.0
+margin_right = 204.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button14" type="Button" parent="snare_line"]
+margin_left = 208.0
+margin_right = 220.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button15" type="Button" parent="snare_line"]
+margin_left = 224.0
+margin_right = 236.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Button16" type="Button" parent="snare_line"]
+margin_left = 240.0
+margin_right = 252.0
+margin_bottom = 20.0
+custom_styles/pressed = ExtResource( 7 )
+toggle_mode = true
+
+[node name="Label6" type="Label" parent="."]
+margin_left = 3.0
+margin_top = 298.0
+margin_right = 98.0
+margin_bottom = 312.0
+text = "Drum machine"
+
+[node name="Label7" type="Label" parent="."]
+margin_left = 3.0
+margin_top = 322.0
+margin_right = 28.0
+margin_bottom = 336.0
+text = "kick"
+
+[node name="Label8" type="Label" parent="."]
+margin_left = 4.0
+margin_top = 393.0
+margin_right = 39.0
+margin_bottom = 407.0
+text = "snare"
+
+[node name="Label9" type="Label" parent="."]
+margin_left = 3.0
+margin_top = 368.0
+margin_right = 35.0
+margin_bottom = 382.0
+text = "hihat"
+
+[node name="Label10" type="Label" parent="."]
+margin_left = 3.0
+margin_top = 341.0
+margin_right = 29.0
+margin_bottom = 355.0
+text = "clap"
+
+[node name="kick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="clap" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[node name="hihat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="snare" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
 
 [connection signal="pressed" from="sound_waves/square" to="." method="_on_square_pressed"]
 [connection signal="pressed" from="sound_waves/saw" to="." method="_on_saw_pressed"]
-[connection signal="pressed" from="play" to="Player" method="_on_play_pressed"]
 [connection signal="pressed" from="play" to="sequencer" method="_on_play_pressed"]
-[connection signal="pressed" from="stop" to="Player" method="_on_stop_pressed"]
 [connection signal="pressed" from="stop" to="sequencer" method="_on_stop_pressed"]
 [connection signal="value_changed" from="bpm" to="sequencer" method="_on_bpm_value_changed"]
 [connection signal="pressed" from="step" to="sequencer" method="_on_step_pressed"]
+[connection signal="toggled" from="keyboard" to="." method="_on_keyboard_toggled"]

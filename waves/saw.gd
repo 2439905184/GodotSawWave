@@ -10,11 +10,14 @@ var playback: AudioStreamPlayback = null
 func _ready():
 	self.stream.mix_rate = sample_rate
 	playback = get_stream_playback()
+	print(playback)
 	_fill_buffer()
-	self.play()
+#	set_process(false)
+#	self.play()
 
 func _process(delta):
 	_fill_buffer()
+	pass
 
 func cal_sawtooth(p_value):
 	return amplitude * (2.0 * (p_value - floor(p_value)) - 1.0)
